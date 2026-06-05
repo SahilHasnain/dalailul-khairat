@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { Cormorant_Garamond, Noto_Naskh_Arabic, Source_Sans_3 } from "next/font/google";
 import Link from "next/link";
 import { siteUrl } from "@/lib/content";
 import "./globals.css";
+import "./batch2.css";
 
 const sourceSans = Source_Sans_3({
   variable: "--font-source-sans",
@@ -65,6 +66,9 @@ export default function RootLayout({
       className={`${sourceSans.variable} ${cormorant.variable} ${notoNaskh.variable} scroll-smooth`}
     >
       <body>
+        <a className="skip-link" href="#main-content">
+          Skip to content
+        </a>
         <header className="site-header">
           <Link className="brand" href="/" aria-label="Dalail al-Khairat Online home">
             <span className="brand-mark">د</span>
@@ -78,7 +82,7 @@ export default function RootLayout({
             ))}
           </nav>
         </header>
-        {children}
+        <div id="main-content">{children}</div>
         <footer className="site-footer">
           <p>Built as an SEO-first reader for Dalail al-Khairat.</p>
           <div>

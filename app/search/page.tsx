@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllReadingContent } from "@/lib/content";
 
@@ -13,6 +13,34 @@ export const metadata: Metadata = {
     canonical: "/search",
   },
 };
+
+const suggestedSearches = ["Allahumma", "Muhammad", "mercy", "forgive", "Friday", "اللَّهُمَّ"];
+
+function getMatchText(query: string, values: Array<string | undefined>) {
+  const normalizedQuery = query.toLocaleLowerCase();
+  const value = values.find((item) => item?.toLocaleLowerCase().includes(normalizedQuery));
+
+  return value ?? values.find(Boolean) ?? "";
+}
+
+function Highlight({ text, query }: { text: string; query: string }) {
+  if (!query) return text;
+
+  const index = text.toLocaleLowerCase().indexOf(query.toLocaleLowerCase());
+  if (index === -1) return text;
+
+  const before = text.slice(0, index);
+  const match = text.slice(index, index + query.length);
+  const after = text.slice(index + query.length);
+
+  return (
+    <>
+      {before}
+      <mark>{match}</mark>
+      {after}
+    </>
+  );
+}
 
 export default async function SearchPage({ searchParams }: Props) {
   const { q } = await searchParams;
@@ -29,44 +57,78 @@ export default async function SearchPage({ searchParams }: Props) {
               .includes(normalizedQuery),
           )
           .slice(0, 8)
-          .map((paragraph) => ({ reading, paragraph })),
+          .map((paragraph) => ({
+            reading,
+            paragraph,
+            matchText: getMatchText(query, [paragraph.arabic, paragraph.translation, paragraph.transliteration, reading.title, reading.day]),
+          })),
       )
     : [];
 
   return (
-    <main className="section-shell page-stack">
-      <section className="page-hero narrow">
-        <p className="eyebrow">Search</p>
-        <h1>Search Dalail al-Khairat</h1>
-        <p>Find Arabic phrases, transliteration, English translation, daily parts, and names sections.</p>
+    <main className="section-shell page-stack search-page">
+      <section className="search-hero">
+        <div className="page-hero narrow">
+          <p className="eyebrow">Search</p>
+          <h1>Search the Dalail al-Khairat text</h1>
+          <p>Find Arabic phrases, transliteration, English translation, daily parts, and names sections.</p>
+        </div>
+        <div className="search-help-card">
+          <span>Tip</span>
+          <p>Short phrases work best. Try Arabic roots, “Allahumma”, “Muhammad”, or English words like “mercy”.</p>
+        </div>
       </section>
 
       <form className="search-form" action="/search">
         <label htmlFor="q">Search text</label>
         <div>
-          <input id="q" name="q" type="search" defaultValue={query} placeholder="Try Allahumma, mercy, Muhammad..." />
+          <input id="q" name="q" type="search" defaultValue={query} placeholder="Try Allahumma, mercy, Muhammad..." autoComplete="off" />
           <button className="button primary" type="submit">Search</button>
         </div>
       </form>
 
+      <section className="suggested-searches" aria-label="Suggested searches">
+        <span>Try</span>
+        {suggestedSearches.map((suggestion) => (
+          <Link href={`/search?q=${encodeURIComponent(suggestion)}`} key={suggestion}>
+            {suggestion}
+          </Link>
+        ))}
+      </section>
+
       {query ? (
         <section aria-live="polite" className="search-results">
-          <h2>{results.length} results for “{query}”</h2>
+          <div className="search-results-header">
+            <p className="eyebrow">Results</p>
+            <h2>{results.length} results for “{query}”</h2>
+          </div>
           {results.length ? (
             <div className="result-list">
-              {results.map(({ reading, paragraph }) => (
+              {results.map(({ reading, paragraph, matchText }) => (
                 <Link className="result-card" href={`/dalail-al-khairat/${reading.slug}#${paragraph.id}`} key={`${reading.slug}-${paragraph.id}`}>
-                  <span>{reading.title}</span>
+                  <span>{reading.day ? `${reading.day} · ${reading.title}` : reading.title}</span>
                   {paragraph.arabic ? <strong lang="ar" dir="rtl">{paragraph.arabic}</strong> : null}
-                  <small>{paragraph.translation ?? paragraph.transliteration ?? reading.description}</small>
+                  <small>
+                    <Highlight text={matchText} query={query} />
+                  </small>
+                  <em>Open passage {paragraph.id.replace("p-", "")}</em>
                 </Link>
               ))}
             </div>
           ) : (
-            <p>No matching text found. Try a shorter phrase or search in Arabic.</p>
+            <div className="empty-state">
+              <h2>No matching text found</h2>
+              <p>Try a shorter phrase, search in Arabic, or use one of the suggested searches above.</p>
+              <Link className="button secondary" href="/dalail-al-khairat">Browse readings instead</Link>
+            </div>
           )}
         </section>
-      ) : null}
+      ) : (
+        <section className="empty-state search-start-state">
+          <h2>Search across the reader</h2>
+          <p>Results will link directly to matching passages in the reading pages.</p>
+        </section>
+      )}
     </main>
   );
 }

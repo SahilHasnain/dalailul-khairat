@@ -47,6 +47,29 @@ input {
   font: inherit;
 }
 
+:focus-visible {
+  outline: 3px solid rgba(185, 139, 59, 0.78);
+  outline-offset: 4px;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 50;
+  border-radius: 999px;
+  background: var(--green);
+  color: #fff7e6;
+  font-weight: 900;
+  padding: 0.75rem 1rem;
+  transform: translateY(-140%);
+  transition: transform 160ms ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
 .site-header {
   position: sticky;
   top: 0;
@@ -243,7 +266,10 @@ input {
 }
 
 .reading-card:hover,
-.result-card:hover {
+.result-card:hover,
+.today-card:hover,
+.cycle-strip a:hover,
+.pager-card:hover {
   border-color: rgba(18, 61, 45, 0.35);
   background: #fffdf6;
   transform: translateY(-2px);
@@ -275,6 +301,105 @@ input {
 .reading-card.large {
   min-height: 14rem;
   padding: 1.25rem;
+}
+
+.reader-index-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 380px);
+  gap: clamp(1.5rem, 5vw, 4rem);
+  align-items: end;
+}
+
+.today-card {
+  display: grid;
+  gap: 0.5rem;
+  min-height: 18rem;
+  align-content: end;
+  border: 1px solid rgba(185, 139, 59, 0.42);
+  border-radius: 2rem;
+  background:
+    radial-gradient(circle at top right, rgba(185, 139, 59, 0.22), transparent 12rem),
+    linear-gradient(135deg, #fffaf0, #f5e3bd);
+  box-shadow: 0 24px 80px rgba(56, 42, 20, 0.12);
+  padding: 1.5rem;
+}
+
+.today-card span,
+.cycle-strip span,
+.reader-meta-row span,
+.pager-card span {
+  color: var(--rose);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.today-card strong {
+  color: var(--green);
+  font-family: var(--font-display), serif;
+  font-size: clamp(2.2rem, 5vw, 3.7rem);
+  line-height: 0.9;
+}
+
+.today-card small {
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.cycle-strip {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 0.6rem;
+  padding: 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  background: rgba(255, 250, 240, 0.66);
+}
+
+.cycle-strip a {
+  display: grid;
+  gap: 0.25rem;
+  min-height: 5.5rem;
+  align-content: center;
+  border: 1px solid transparent;
+  border-radius: 1rem;
+  padding: 0.75rem;
+}
+
+.cycle-strip strong {
+  color: var(--green);
+  font-family: var(--font-display), serif;
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.reading-groups {
+  display: grid;
+  gap: 3rem;
+}
+
+.reading-group {
+  display: grid;
+  gap: 1rem;
+}
+
+.reading-group header {
+  max-width: 720px;
+}
+
+.reading-group h2 {
+  margin: 0;
+  color: var(--green);
+  font-family: var(--font-display), serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1;
+}
+
+.reading-group header p:last-child {
+  color: var(--muted);
+  font-size: 1.08rem;
+  line-height: 1.65;
 }
 
 .feature-panel {
@@ -339,20 +464,51 @@ input {
   top: 6rem;
   display: grid;
   align-self: start;
-  gap: 0.35rem;
+  gap: 1rem;
+  max-height: calc(100vh - 7rem);
+  overflow: auto;
+  padding-right: 0.25rem;
 }
 
 .reader-sidebar a {
+  display: grid;
+  gap: 0.1rem;
   border-radius: 999px;
   color: var(--muted);
   font-weight: 800;
   padding: 0.65rem 0.85rem;
 }
 
+.reader-sidebar a small {
+  color: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  opacity: 0.74;
+}
+
 .reader-sidebar a.active,
 .reader-sidebar a:hover {
   background: var(--green);
   color: #fff7e6;
+}
+
+.all-readings-link {
+  border: 1px solid var(--border);
+  background: rgba(255, 250, 240, 0.74);
+}
+
+.reader-nav-group {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.reader-nav-group p {
+  margin: 0 0 0.25rem 0.85rem;
+  color: var(--rose);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .reader-article {
@@ -382,17 +538,57 @@ input {
   line-height: 1.65;
 }
 
+.reader-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.reader-meta-row span {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(255, 253, 248, 0.78);
+  color: var(--green);
+  padding: 0.45rem 0.7rem;
+}
+
+.reader-start {
+  margin-top: 1rem;
+}
+
 .paragraph-list {
   display: grid;
   gap: 1rem;
 }
 
 .reading-paragraph {
+  position: relative;
   scroll-margin-top: 6rem;
   border: 1px solid var(--border);
   border-radius: 1.5rem;
   background: var(--paper);
   padding: clamp(1.2rem, 4vw, 2rem);
+}
+
+.paragraph-anchor {
+  position: absolute;
+  top: 0.85rem;
+  left: 0.85rem;
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.paragraph-anchor:hover {
+  background: var(--green);
+  color: #fff7e6;
 }
 
 .arabic {
@@ -427,13 +623,34 @@ input {
   margin-top: 2rem;
 }
 
-.reader-pager a {
+.pager-card {
+  display: grid;
+  min-height: 8rem;
+  align-content: center;
+  gap: 0.35rem;
+  min-width: min(100%, 18rem);
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: 1.35rem;
   background: var(--paper);
   color: var(--green);
   font-weight: 800;
-  padding: 0.75rem 1rem;
+  padding: 1rem;
+}
+
+.pager-card.next {
+  text-align: right;
+}
+
+.pager-card strong {
+  color: var(--green);
+  font-family: var(--font-display), serif;
+  font-size: 1.65rem;
+  line-height: 1;
+}
+
+.pager-card small {
+  color: var(--muted);
+  font-size: 0.9rem;
 }
 
 .search-form {
@@ -507,10 +724,15 @@ input {
 @media (max-width: 860px) {
   .site-header,
   .site-footer,
+  .reader-index-hero,
   .split-section,
   .feature-grid,
   .reader-shell {
     grid-template-columns: 1fr;
+  }
+
+  .cycle-strip {
+    grid-template-columns: repeat(4, 1fr);
   }
 
   .site-header,
@@ -523,10 +745,21 @@ input {
     position: static;
     display: flex;
     overflow-x: auto;
+    max-height: none;
     padding-bottom: 0.5rem;
   }
 
+  .reader-nav-group {
+    display: contents;
+  }
+
+  .reader-nav-group p {
+    display: none;
+  }
+
   .reader-sidebar a {
+    display: block;
+    min-height: 2.75rem;
     white-space: nowrap;
   }
 
@@ -546,7 +779,16 @@ input {
     padding-inline: 0.55rem;
   }
 
+  .cycle-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .arabic {
     line-height: 1.9;
+  }
+
+  .paragraph-anchor {
+    position: static;
+    margin-bottom: 0.75rem;
   }
 }

@@ -25,6 +25,12 @@ export type Reading = ReadingMeta & {
   paragraphs: ReadingParagraph[];
 };
 
+export type ReadingGroup = {
+  title: string;
+  description: string;
+  readings: ReadingMeta[];
+};
+
 const mirrorRoot = path.join(process.cwd(), "httrack", "dalailalkhayrat.com");
 
 export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dalailul-khairat.local";
@@ -212,7 +218,36 @@ function extractParagraphs(sourceFile: string): ReadingParagraph[] {
 }
 
 export function getReadings() {
-  return readings.sort((a, b) => a.order - b.order);
+  return [...readings].sort((a, b) => a.order - b.order);
+}
+
+export function getReadingGroups(): ReadingGroup[] {
+  const sortedReadings = getReadings();
+
+  return [
+    {
+      title: "Begin",
+      description: "Opening, names, and intention sections before the daily wird.",
+      readings: sortedReadings.filter((reading) => reading.order < 5),
+    },
+    {
+      title: "Daily Parts",
+      description: "The weekly recitation cycle from Monday through Sunday, plus Part 8.",
+      readings: sortedReadings.filter((reading) => reading.kind === "part"),
+    },
+    {
+      title: "Complete",
+      description: "Completion dua after finishing the cycle.",
+      readings: sortedReadings.filter((reading) => reading.slug === "completion-dua"),
+    },
+  ];
+}
+
+export function getTodayReading(date = new Date()) {
+  const dayToSlug = ["part-7", "part-1", "part-2", "part-3", "part-4", "part-5", "part-6"];
+  const slug = dayToSlug[date.getDay()];
+
+  return readings.find((reading) => reading.slug === slug) ?? readings.find((reading) => reading.slug === "part-1");
 }
 
 export function getReading(slug: string): Reading | undefined {
