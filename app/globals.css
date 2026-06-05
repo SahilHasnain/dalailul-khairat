@@ -601,14 +601,6 @@ input {
   text-align: right;
 }
 
-.transliteration {
-  margin: 1.15rem 0 0;
-  color: var(--rose);
-  font-size: 1.05rem;
-  font-style: italic;
-  line-height: 1.75;
-}
-
 .translation {
   margin: 0.75rem 0 0;
   color: var(--muted);

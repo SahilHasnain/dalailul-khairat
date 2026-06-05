@@ -67,7 +67,7 @@ export default async function ReadingPage({ params }: Props) {
   return (
     <main className="reader-shell">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <aside className="reader-sidebar" aria-label="Reading navigation">
+      <aside className="reader-sidebar" data-aos="fade-right" aria-label="Reading navigation">
         <Link className="all-readings-link" href="/dalail-al-khairat">All readings</Link>
         {groups.map((group) => (
           <div className="reader-nav-group" key={group.title}>
@@ -88,14 +88,13 @@ export default async function ReadingPage({ params }: Props) {
       </aside>
 
       <article className="reader-article">
-        <header className="reader-header">
+        <header className="reader-header" data-aos="fade-up" data-aos-delay="120">
           <p className="eyebrow">{reading.day ? `${reading.day} reading` : reading.kind}</p>
           <h1>{reading.title}</h1>
           <p className="hero-copy">{reading.description}</p>
           <div className="reader-meta-row">
             <span>{paragraphCount} passages</span>
             <span>Arabic</span>
-            <span>Transliteration</span>
             <span>English</span>
           </div>
           {firstParagraphId ? (
@@ -113,7 +112,7 @@ export default async function ReadingPage({ params }: Props) {
         ) : (
           <div className="paragraph-list">
             {reading.paragraphs.map((paragraph) => (
-              <section className="reading-paragraph" id={paragraph.id} key={paragraph.id}>
+              <section className="reading-paragraph" data-aos="fade-up" id={paragraph.id} key={paragraph.id}>
                 <a className="paragraph-anchor" href={`#${paragraph.id}`} aria-label={`Link to passage ${paragraph.id.replace("p-", "")}`}>
                   {paragraph.id.replace("p-", "")}
                 </a>
@@ -122,14 +121,13 @@ export default async function ReadingPage({ params }: Props) {
                     {paragraph.arabic}
                   </p>
                 ) : null}
-                {paragraph.transliteration ? <p className="transliteration">{paragraph.transliteration}</p> : null}
                 {paragraph.translation ? <p className="translation">{paragraph.translation}</p> : null}
               </section>
             ))}
           </div>
         )}
 
-        <nav className="reader-pager" aria-label="Previous and next reading">
+        <nav className="reader-pager" data-aos="fade-up" aria-label="Previous and next reading">
           {previous ? (
             <Link className="pager-card previous" href={`/dalail-al-khairat/${previous.slug}`}>
               <span>Previous</span>

@@ -1,7 +1,21 @@
 .home-hero {
+  position: relative;
   grid-template-columns: minmax(0, 1fr) minmax(300px, 430px);
   gap: clamp(2rem, 7vw, 5rem);
   align-items: center;
+}
+
+.home-hero::before {
+  position: absolute;
+  inset: 12% -8% auto auto;
+  z-index: -1;
+  width: clamp(14rem, 28vw, 26rem);
+  height: clamp(14rem, 28vw, 26rem);
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(185, 139, 59, 0.22), transparent 68%);
+  content: "";
+  filter: blur(8px);
+  animation: home-glow 9s ease-in-out infinite alternate;
 }
 
 .home-hero-copy {
@@ -58,9 +72,19 @@
 
 .home-preview {
   display: grid;
+  grid-template-rows: auto auto auto minmax(0, 1fr) auto;
   gap: 0.9rem;
+  height: clamp(32rem, 68vh, 42rem);
   padding: clamp(1.25rem, 4vw, 2rem);
   background: radial-gradient(circle at top left, rgba(185, 139, 59, 0.2), transparent 13rem), rgba(255, 250, 240, 0.86);
+  animation: card-float 7s ease-in-out 900ms infinite;
+}
+
+.home-preview-scroll {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 0.4rem;
 }
 
 .home-preview span,
@@ -121,6 +145,16 @@
 
 .mini-reader-card {
   background: #fffaf0;
+  height: clamp(28rem, 62vh, 38rem);
+  overflow: hidden;
+  animation: card-float 8s ease-in-out 1.1s infinite;
+}
+
+.mini-reader-scroll {
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 0.4rem;
 }
 
 .search-page {
@@ -162,6 +196,113 @@
 .suggested-searches a:hover {
   background: var(--green);
   color: #fff7e6;
+}
+
+.home-down {
+  position: absolute;
+  right: clamp(1rem, 4vw, 3rem);
+  bottom: clamp(1rem, 5vw, 2rem);
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  place-items: center;
+  border: 1px solid rgba(185, 139, 59, 0.42);
+  border-radius: 999px;
+  background: rgba(255, 250, 240, 0.72);
+  color: var(--green);
+  font-size: 1.4rem;
+  font-weight: 900;
+  animation: arrow-bounce 1.7s ease-in-out infinite;
+}
+
+.home-stats div,
+.value-strip article,
+.reading-card,
+.today-card,
+.cycle-strip a,
+.result-card,
+.prose-card,
+.reader-header,
+.reading-paragraph,
+.pager-card,
+.button,
+.home-preview,
+.mini-reader-card {
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease, background-color 180ms ease;
+}
+
+.home-stats div:hover,
+.value-strip article:hover,
+.mini-reader-card:hover,
+.prose-card:hover,
+.reader-header:hover,
+.reading-paragraph:hover {
+  border-color: rgba(18, 61, 45, 0.28);
+  box-shadow: 0 28px 90px rgba(56, 42, 20, 0.14);
+  transform: translateY(-4px);
+}
+
+.button:hover {
+  transform: translateY(-2px);
+}
+
+@keyframes card-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes arrow-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(0.45rem);
+  }
+}
+
+@keyframes home-glow {
+  from {
+    opacity: 0.55;
+    transform: translate3d(0, 0, 0) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(-2rem, 1.5rem, 0) scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-preview,
+  .mini-reader-card,
+  .home-hero::before,
+  .home-down {
+    animation: none;
+  }
+
+  .home-stats div,
+  .value-strip article,
+  .reading-card,
+  .today-card,
+  .cycle-strip a,
+  .result-card,
+  .prose-card,
+  .reader-header,
+  .reading-paragraph,
+  .pager-card,
+  .button,
+  .home-preview,
+  .mini-reader-card {
+    transition: none;
+  }
 }
 
 .search-results-header h2 {

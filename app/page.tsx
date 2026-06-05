@@ -10,12 +10,12 @@ export default function Home() {
 
   return (
     <main>
-      <section className="hero section-shell home-hero">
-        <div className="home-hero-copy">
+      <section className="hero section-shell home-hero" id="home-top">
+        <div className="home-hero-copy" data-aos="fade-up" data-aos-delay="80">
           <p className="eyebrow">دلائل الخيرات</p>
           <h1>Read Dalail al-Khairat in a calmer, faster web reader.</h1>
           <p className="hero-copy">
-            Daily parts, Arabic text, transliteration, English translation, and search-friendly pages designed for focused devotional reading.
+            Daily parts, Arabic text, English translation, and search-friendly pages designed for focused devotional reading.
           </p>
           <div className="hero-actions">
             <Link className="button primary" href={today ? `/dalail-al-khairat/${today.slug}` : "/dalail-al-khairat"}>
@@ -34,7 +34,7 @@ export default function Home() {
               <dd>reading sections</dd>
             </div>
             <div>
-              <dt>3</dt>
+              <dt>2</dt>
               <dd>text views</dd>
             </div>
             <div>
@@ -44,32 +44,38 @@ export default function Home() {
           </dl>
         </div>
 
-        <aside className="home-preview" aria-label="Today’s reading preview">
+        <aside className="home-preview" data-aos="fade-left" data-aos-delay="180" aria-label="Today’s reading preview">
           <span>Today’s reading</span>
           <h2>{today?.title ?? "Daily reading"}</h2>
           {today?.day ? <p className="preview-day">{today.day} wird</p> : null}
-          {preview?.arabic ? (
-            <p className="preview-arabic" lang="ar" dir="rtl">
-              {preview.arabic}
-            </p>
-          ) : null}
-          {preview?.translation ? <p className="preview-translation">{preview.translation}</p> : null}
+          <div className="home-preview-scroll">
+            {preview?.arabic ? (
+              <p className="preview-arabic" lang="ar" dir="rtl">
+                {preview.arabic}
+              </p>
+            ) : null}
+            {preview?.translation ? <p className="preview-translation">{preview.translation}</p> : null}
+          </div>
           <Link href={today ? `/dalail-al-khairat/${today.slug}` : "/dalail-al-khairat"}>Open reading</Link>
         </aside>
+
+        <a className="home-down" href="#home-values" aria-label="Scroll to next section">
+          ↓
+        </a>
       </section>
 
-      <section className="section-shell value-strip" aria-label="Reader value proposition">
-        <article>
+      <section className="section-shell value-strip" id="home-values" aria-label="Reader value proposition">
+        <article data-aos="fade-up" data-aos-delay="0">
           <span>01</span>
           <h2>Find today’s part quickly</h2>
           <p>The weekly cycle is surfaced directly from the homepage and reader index.</p>
         </article>
-        <article>
+        <article data-aos="fade-up" data-aos-delay="120">
           <span>02</span>
           <h2>Read without visual noise</h2>
-          <p>Arabic text, transliteration, and translation are presented with clear hierarchy.</p>
+          <p>Arabic text and translation are presented with clear hierarchy.</p>
         </article>
-        <article>
+        <article data-aos="fade-up" data-aos-delay="240">
           <span>03</span>
           <h2>Search real content</h2>
           <p>Search links directly to passages, not just pages.</p>
@@ -77,33 +83,30 @@ export default function Home() {
       </section>
 
       <section className="section-shell split-section content-preview-section" aria-labelledby="content-preview">
-        <div>
+        <div data-aos="fade-right">
           <p className="eyebrow">Preview</p>
-          <h2 id="content-preview">Arabic, transliteration, and translation in one flow</h2>
-          <p>
-            The reader keeps the devotional text primary while making supporting text easy to scan.
-          </p>
+          <h2 id="content-preview">Arabic and translation in one focused flow</h2>
+          <p>The reader keeps the devotional text primary while making supporting text easy to scan.</p>
         </div>
-        <div className="mini-reader-card">
-          {preview?.arabic ? (
-            <p className="arabic" lang="ar" dir="rtl">
-              {preview.arabic}
-            </p>
-          ) : null}
-          {preview?.transliteration ? <p className="transliteration">{preview.transliteration}</p> : null}
-          {preview?.translation ? <p className="translation">{preview.translation}</p> : null}
+        <div className="mini-reader-card" data-aos="fade-left" data-aos-delay="120">
+          <div className="mini-reader-scroll">
+            {preview?.arabic ? (
+              <p className="arabic" lang="ar" dir="rtl">
+                {preview.arabic}
+              </p>
+            ) : null}
+            {preview?.translation ? <p className="translation">{preview.translation}</p> : null}
+          </div>
         </div>
       </section>
 
       <section className="section-shell split-section" aria-labelledby="daily-reading">
-        <div>
+        <div data-aos="fade-right">
           <p className="eyebrow">Daily Wird</p>
           <h2 id="daily-reading">Browse by daily part</h2>
-          <p>
-            Each reading has a permanent, crawlable URL with meaningful page metadata and internal links.
-          </p>
+          <p>Each reading has a permanent, crawlable URL with meaningful page metadata and internal links.</p>
         </div>
-        <div className="card-grid compact">
+        <div className="card-grid compact" data-aos="fade-left" data-aos-delay="120">
           {parts.map((part) => (
             <Link className="reading-card" href={`/dalail-al-khairat/${part.slug}`} key={part.slug}>
               <span>{part.day ?? "Completion"}</span>
@@ -113,7 +116,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section-shell feature-panel" aria-labelledby="mvp-focus">
+      <section className="section-shell feature-panel" data-aos="fade-up" aria-labelledby="mvp-focus">
         <p className="eyebrow">MVP Focus</p>
         <h2 id="mvp-focus">SEO-first, reader-first</h2>
         <div className="feature-grid">

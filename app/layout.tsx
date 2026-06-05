@@ -1,7 +1,9 @@
 ﻿import type { Metadata } from "next";
 import { Cormorant_Garamond, Noto_Naskh_Arabic, Source_Sans_3 } from "next/font/google";
 import Link from "next/link";
+import { AosInit } from "./components/aos-init";
 import { siteUrl } from "@/lib/content";
+import "aos/dist/aos.css";
 import "./globals.css";
 import "./batch2.css";
 
@@ -24,7 +26,7 @@ const notoNaskh = Noto_Naskh_Arabic({
 
 const title = "Dalail al-Khairat Online";
 const description =
-  "Read Dalail al-Khairat online with Arabic text, transliteration, English translation, daily parts, and search.";
+  "Read Dalail al-Khairat online with Arabic text, English translation, daily parts, and search.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -66,10 +68,11 @@ export default function RootLayout({
       className={`${sourceSans.variable} ${cormorant.variable} ${notoNaskh.variable} scroll-smooth`}
     >
       <body>
+        <AosInit />
         <a className="skip-link" href="#main-content">
           Skip to content
         </a>
-        <header className="site-header">
+        <header className="site-header" data-aos="fade-down" data-aos-duration="600">
           <Link className="brand" href="/" aria-label="Dalail al-Khairat Online home">
             <span className="brand-mark">د</span>
             <span>Dalail al-Khairat</span>
@@ -83,7 +86,7 @@ export default function RootLayout({
           </nav>
         </header>
         <div id="main-content">{children}</div>
-        <footer className="site-footer">
+        <footer className="site-footer" data-aos="fade-up">
           <p>Built as an SEO-first reader for Dalail al-Khairat.</p>
           <div>
             <Link href="/dalail-al-khairat">All readings</Link>

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <main className="section-shell page-stack">
-      <section className="page-hero narrow">
+      <section className="page-hero narrow" data-aos="fade-up">
         <p className="eyebrow">About</p>
         <h1>A focused web reader for Dalail al-Khairat</h1>
         <p>
@@ -21,14 +21,14 @@ export default function AboutPage() {
         </p>
       </section>
 
-      <section className="prose-card">
+      <section className="prose-card" data-aos="fade-up">
         <h2>Product principles</h2>
         <p>
           The first release prioritizes SEO, mobile reading comfort, semantic server-rendered content, and simple navigation. Features like accounts, bookmarks, audio controls, and advanced reader settings can come later.
         </p>
         <h2>Current scope</h2>
         <p>
-          The MVP includes core reading pages, metadata, sitemap, robots, internal links, and search over extracted Arabic, transliteration, and English text.
+          The MVP includes core reading pages, metadata, sitemap, robots, internal links, and search over extracted Arabic and English text.
         </p>
         <Link className="button primary" href="/dalail-al-khairat">Browse readings</Link>
       </section>

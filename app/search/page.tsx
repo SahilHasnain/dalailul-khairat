@@ -8,7 +8,7 @@ type Props = {
 
 export const metadata: Metadata = {
   title: "Search Dalail al-Khairat",
-  description: "Search the Arabic text, transliteration, and English translation of Dalail al-Khairat.",
+  description: "Search the Arabic text and English translation of Dalail al-Khairat.",
   alternates: {
     canonical: "/search",
   },
@@ -50,7 +50,7 @@ export default async function SearchPage({ searchParams }: Props) {
     ? getAllReadingContent().flatMap((reading) =>
         reading.paragraphs
           .filter((paragraph) =>
-            [paragraph.arabic, paragraph.transliteration, paragraph.translation, reading.title, reading.day]
+            [paragraph.arabic, paragraph.translation, reading.title, reading.day]
               .filter(Boolean)
               .join(" ")
               .toLocaleLowerCase()
@@ -60,18 +60,18 @@ export default async function SearchPage({ searchParams }: Props) {
           .map((paragraph) => ({
             reading,
             paragraph,
-            matchText: getMatchText(query, [paragraph.arabic, paragraph.translation, paragraph.transliteration, reading.title, reading.day]),
+            matchText: getMatchText(query, [paragraph.arabic, paragraph.translation, reading.title, reading.day]),
           })),
       )
     : [];
 
   return (
     <main className="section-shell page-stack search-page">
-      <section className="search-hero">
+      <section className="search-hero" data-aos="fade-up">
         <div className="page-hero narrow">
           <p className="eyebrow">Search</p>
           <h1>Search the Dalail al-Khairat text</h1>
-          <p>Find Arabic phrases, transliteration, English translation, daily parts, and names sections.</p>
+          <p>Find Arabic phrases, English translation, daily parts, and names sections.</p>
         </div>
         <div className="search-help-card">
           <span>Tip</span>
@@ -79,7 +79,7 @@ export default async function SearchPage({ searchParams }: Props) {
         </div>
       </section>
 
-      <form className="search-form" action="/search">
+      <form className="search-form" data-aos="fade-up" data-aos-delay="120" action="/search">
         <label htmlFor="q">Search text</label>
         <div>
           <input id="q" name="q" type="search" defaultValue={query} placeholder="Try Allahumma, mercy, Muhammad..." autoComplete="off" />
@@ -87,7 +87,7 @@ export default async function SearchPage({ searchParams }: Props) {
         </div>
       </form>
 
-      <section className="suggested-searches" aria-label="Suggested searches">
+      <section className="suggested-searches" data-aos="fade-up" aria-label="Suggested searches">
         <span>Try</span>
         {suggestedSearches.map((suggestion) => (
           <Link href={`/search?q=${encodeURIComponent(suggestion)}`} key={suggestion}>
@@ -97,15 +97,21 @@ export default async function SearchPage({ searchParams }: Props) {
       </section>
 
       {query ? (
-        <section aria-live="polite" className="search-results">
+        <section aria-live="polite" className="search-results" data-aos="fade-up">
           <div className="search-results-header">
             <p className="eyebrow">Results</p>
             <h2>{results.length} results for “{query}”</h2>
           </div>
           {results.length ? (
             <div className="result-list">
-              {results.map(({ reading, paragraph, matchText }) => (
-                <Link className="result-card" href={`/dalail-al-khairat/${reading.slug}#${paragraph.id}`} key={`${reading.slug}-${paragraph.id}`}>
+              {results.map(({ reading, paragraph, matchText }, index) => (
+                <Link
+                  className="result-card"
+                  data-aos="fade-up"
+                  data-aos-delay={Math.min(index * 50, 250)}
+                  href={`/dalail-al-khairat/${reading.slug}#${paragraph.id}`}
+                  key={`${reading.slug}-${paragraph.id}`}
+                >
                   <span>{reading.day ? `${reading.day} · ${reading.title}` : reading.title}</span>
                   {paragraph.arabic ? <strong lang="ar" dir="rtl">{paragraph.arabic}</strong> : null}
                   <small>
@@ -124,7 +130,7 @@ export default async function SearchPage({ searchParams }: Props) {
           )}
         </section>
       ) : (
-        <section className="empty-state search-start-state">
+        <section className="empty-state search-start-state" data-aos="fade-up">
           <h2>Search across the reader</h2>
           <p>Results will link directly to matching passages in the reading pages.</p>
         </section>

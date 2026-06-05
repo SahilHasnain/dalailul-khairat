@@ -20,7 +20,7 @@ export default function DalailIndexPage() {
 
   return (
     <main className="section-shell page-stack">
-      <section className="reader-index-hero">
+      <section className="reader-index-hero" data-aos="fade-up">
         <div className="page-hero narrow">
           <p className="eyebrow">Reader</p>
           <h1>Choose your Dalail al-Khairat reading</h1>
@@ -37,7 +37,7 @@ export default function DalailIndexPage() {
         ) : null}
       </section>
 
-      <section className="cycle-strip" aria-label="Weekly daily reading cycle">
+      <section className="cycle-strip" data-aos="fade-up" aria-label="Weekly daily reading cycle">
         {dailyParts.map((reading) => (
           <Link href={`/dalail-al-khairat/${reading.slug}`} key={reading.slug}>
             <span>{reading.day ?? "Extra"}</span>
@@ -48,15 +48,21 @@ export default function DalailIndexPage() {
 
       <section className="reading-groups" aria-label="Dalail al-Khairat reading sections">
         {groups.map((group) => (
-          <div className="reading-group" key={group.title}>
+          <div className="reading-group" data-aos="fade-up" key={group.title}>
             <header>
               <p className="eyebrow">{group.title}</p>
               <h2>{group.title === "Daily Parts" ? "Weekly reading cycle" : group.title}</h2>
               <p>{group.description}</p>
             </header>
             <div className="card-grid">
-              {group.readings.map((reading) => (
-                <Link className="reading-card large" href={`/dalail-al-khairat/${reading.slug}`} key={reading.slug}>
+              {group.readings.map((reading, index) => (
+                <Link
+                  className="reading-card large"
+                  data-aos="fade-up"
+                  data-aos-delay={Math.min(index * 60, 240)}
+                  href={`/dalail-al-khairat/${reading.slug}`}
+                  key={reading.slug}
+                >
                   <span>{reading.day ?? reading.kind}</span>
                   <strong>{reading.title}</strong>
                   <small>{reading.description}</small>

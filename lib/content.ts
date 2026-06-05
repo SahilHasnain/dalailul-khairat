@@ -17,7 +17,6 @@ export type ReadingMeta = {
 export type ReadingParagraph = {
   id: string;
   arabic?: string;
-  transliteration?: string;
   translation?: string;
 };
 
@@ -40,7 +39,7 @@ export const readings: ReadingMeta[] = [
     slug: "opening-dua",
     title: "Opening Dua",
     label: "Opening",
-    description: "Read the opening dua of Dalail al-Khairat in Arabic with transliteration and English translation.",
+    description: "Read the opening dua of Dalail al-Khairat in Arabic with English translation.",
     kind: "dua",
     sourceFile: "duas61e2.html",
     order: 1,
@@ -76,7 +75,7 @@ export const readings: ReadingMeta[] = [
     slug: "part-1",
     title: "Part 1",
     label: "Part 1",
-    description: "Read Part 1 of Dalail al-Khairat for Monday in Arabic, transliteration, and English translation.",
+    description: "Read Part 1 of Dalail al-Khairat for Monday in Arabic with English translation.",
     kind: "part",
     sourceFile: "parts5aaa.html",
     day: "Monday",
@@ -86,7 +85,7 @@ export const readings: ReadingMeta[] = [
     slug: "part-2",
     title: "Part 2",
     label: "Part 2",
-    description: "Read Part 2 of Dalail al-Khairat for Tuesday in Arabic, transliteration, and English translation.",
+    description: "Read Part 2 of Dalail al-Khairat for Tuesday in Arabic with English translation.",
     kind: "part",
     sourceFile: "parts259a.html",
     day: "Tuesday",
@@ -96,7 +95,7 @@ export const readings: ReadingMeta[] = [
     slug: "part-3",
     title: "Part 3",
     label: "Part 3",
-    description: "Read Part 3 of Dalail al-Khairat for Wednesday in Arabic, transliteration, and English translation.",
+    description: "Read Part 3 of Dalail al-Khairat for Wednesday in Arabic with English translation.",
     kind: "part",
     sourceFile: "parts6b6f.html",
     day: "Wednesday",
@@ -106,7 +105,7 @@ export const readings: ReadingMeta[] = [
     slug: "part-4",
     title: "Part 4",
     label: "Part 4",
-    description: "Read Part 4 of Dalail al-Khairat for Thursday in Arabic, transliteration, and English translation.",
+    description: "Read Part 4 of Dalail al-Khairat for Thursday in Arabic with English translation.",
     kind: "part",
     sourceFile: "partsbec6.html",
     day: "Thursday",
@@ -116,7 +115,7 @@ export const readings: ReadingMeta[] = [
     slug: "part-5",
     title: "Part 5",
     label: "Part 5",
-    description: "Read Part 5 of Dalail al-Khairat for Friday in Arabic, transliteration, and English translation.",
+    description: "Read Part 5 of Dalail al-Khairat for Friday in Arabic with English translation.",
     kind: "part",
     sourceFile: "parts2c41.html",
     day: "Friday",
@@ -126,7 +125,7 @@ export const readings: ReadingMeta[] = [
     slug: "part-6",
     title: "Part 6",
     label: "Part 6",
-    description: "Read Part 6 of Dalail al-Khairat for Saturday in Arabic, transliteration, and English translation.",
+    description: "Read Part 6 of Dalail al-Khairat for Saturday in Arabic with English translation.",
     kind: "part",
     sourceFile: "parts11a0.html",
     day: "Saturday",
@@ -136,7 +135,7 @@ export const readings: ReadingMeta[] = [
     slug: "part-7",
     title: "Part 7",
     label: "Part 7",
-    description: "Read Part 7 of Dalail al-Khairat for Sunday in Arabic, transliteration, and English translation.",
+    description: "Read Part 7 of Dalail al-Khairat for Sunday in Arabic with English translation.",
     kind: "part",
     sourceFile: "parts5c9e.html",
     day: "Sunday",
@@ -146,7 +145,7 @@ export const readings: ReadingMeta[] = [
     slug: "part-8",
     title: "Part 8",
     label: "Part 8",
-    description: "Read Part 8 and the completion section of Dalail al-Khairat in Arabic, transliteration, and English translation.",
+    description: "Read Part 8 and the completion section of Dalail al-Khairat in Arabic with English translation.",
     kind: "part",
     sourceFile: "parts2f95.html",
     order: 12,
@@ -155,7 +154,7 @@ export const readings: ReadingMeta[] = [
     slug: "completion-dua",
     title: "Dua of Completion",
     label: "Completion",
-    description: "Read the completion dua of Dalail al-Khairat in Arabic with transliteration and English translation.",
+    description: "Read the completion dua of Dalail al-Khairat in Arabic with English translation.",
     kind: "dua",
     sourceFile: "duas0423.html",
     order: 13,
@@ -206,9 +205,6 @@ function extractParagraphs(sourceFile: string): ReadingParagraph[] {
     }
 
     if (!current) continue;
-    if (className.split(/\s+/).includes("translit") && !current.transliteration) {
-      current.transliteration = text;
-    }
     if (className.split(/\s+/).includes("trans") && !current.translation) {
       current.translation = text;
     }
