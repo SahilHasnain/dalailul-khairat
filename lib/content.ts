@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { normalizeTranslationNames } from "./translation-normalization";
 
 export type ReadingKind = "dua" | "part" | "names";
 
@@ -32,7 +33,9 @@ export type ReadingGroup = {
 
 const mirrorRoot = path.join(process.cwd(), "httrack", "dalailalkhayrat.com");
 
-export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dalailul-khairat.local";
+const vercelUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL ?? process.env.VERCEL_URL;
+
+export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? (vercelUrl ? `https://${vercelUrl}` : "https://dalailul-khairat.vercel.app");
 
 export const readings: ReadingMeta[] = [
   {
@@ -206,7 +209,7 @@ function extractParagraphs(sourceFile: string): ReadingParagraph[] {
 
     if (!current) continue;
     if (className.split(/\s+/).includes("trans") && !current.translation) {
-      current.translation = text;
+      current.translation = normalizeTranslationNames(text);
     }
   }
 

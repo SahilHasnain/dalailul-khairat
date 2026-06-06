@@ -87,7 +87,7 @@ export default function RootLayout({
         </header>
         <div id="main-content">{children}</div>
         <footer className="site-footer" data-aos="fade-up">
-          <p>Built as an SEO-first reader for Dalail al-Khairat.</p>
+          <p>Read Dalail al-Khairat with Arabic text and English translation.</p>
           <div>
             <Link href="/dalail-al-khairat">All readings</Link>
             <Link href="/search">Search</Link>

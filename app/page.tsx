@@ -15,7 +15,7 @@ export default function Home() {
           <p className="eyebrow">دلائل الخيرات</p>
           <h1>Read Dalail al-Khairat in a calmer, faster web reader.</h1>
           <p className="hero-copy">
-            Daily parts, Arabic text, English translation, and search-friendly pages designed for focused devotional reading.
+            Daily parts, Arabic text, and English translation for focused devotional reading.
           </p>
           <div className="hero-actions">
             <Link className="button primary" href={today ? `/dalail-al-khairat/${today.slug}` : "/dalail-al-khairat"}>
@@ -38,8 +38,8 @@ export default function Home() {
               <dd>text views</dd>
             </div>
             <div>
-              <dt>SEO</dt>
-              <dd>server-rendered</dd>
+              <dt>7</dt>
+              <dd>day cycle</dd>
             </div>
           </dl>
         </div>
@@ -77,8 +77,8 @@ export default function Home() {
         </article>
         <article data-aos="fade-up" data-aos-delay="240">
           <span>03</span>
-          <h2>Search real content</h2>
-          <p>Search links directly to passages, not just pages.</p>
+          <h2>Search the text</h2>
+          <p>Find Arabic phrases and English translation across the readings.</p>
         </article>
       </section>
 
@@ -104,7 +104,7 @@ export default function Home() {
         <div data-aos="fade-right">
           <p className="eyebrow">Daily Wird</p>
           <h2 id="daily-reading">Browse by daily part</h2>
-          <p>Each reading has a permanent, crawlable URL with meaningful page metadata and internal links.</p>
+          <p>Move through the weekly recitation cycle from Monday through Sunday.</p>
         </div>
         <div className="card-grid compact" data-aos="fade-left" data-aos-delay="120">
           {parts.map((part) => (
@@ -116,21 +116,21 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section-shell feature-panel" data-aos="fade-up" aria-labelledby="mvp-focus">
-        <p className="eyebrow">MVP Focus</p>
-        <h2 id="mvp-focus">SEO-first, reader-first</h2>
+      <section className="section-shell feature-panel" data-aos="fade-up" aria-labelledby="reading-focus">
+        <p className="eyebrow">Reading</p>
+        <h2 id="reading-focus">A simple way to keep the weekly wird</h2>
         <div className="feature-grid">
           <article>
-            <h3>Semantic HTML</h3>
-            <p>Core devotional text is rendered on the server so search engines and users receive useful content immediately.</p>
+            <h3>Begin</h3>
+            <p>Open with the introductory duas and names sections before the daily recitation.</p>
           </article>
           <article>
-            <h3>Reading UX</h3>
-            <p>Large Arabic typography, calm spacing, and focused content hierarchy improve long-form reading on mobile.</p>
+            <h3>Read</h3>
+            <p>Follow the daily parts with clear Arabic text and English translation.</p>
           </article>
           <article>
-            <h3>Fast Discovery</h3>
-            <p>The search page indexes the extracted source content and links directly to matching paragraphs.</p>
+            <h3>Complete</h3>
+            <p>Continue through the completion dua and return to the cycle when ready.</p>
           </article>
         </div>
       </section>

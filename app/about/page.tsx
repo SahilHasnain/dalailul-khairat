@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "About Dalail al-Khairat",
   description:
-    "Learn about this SEO-first Dalail al-Khairat reader and the MVP focus on readable devotional text.",
+    "Learn about Dalail al-Khairat and this online reader for Arabic text and English translation.",
   alternates: {
     canonical: "/about",
   },
@@ -17,18 +17,18 @@ export default function AboutPage() {
         <p className="eyebrow">About</p>
         <h1>A focused web reader for Dalail al-Khairat</h1>
         <p>
-          This MVP turns the mirrored reference content into a clean, fast, search-friendly reading experience.
+          Read the daily parts of Dalail al-Khairat with Arabic text, English translation, and simple navigation.
         </p>
       </section>
 
       <section className="prose-card" data-aos="fade-up">
-        <h2>Product principles</h2>
+        <h2>About the reading</h2>
         <p>
-          The first release prioritizes SEO, mobile reading comfort, semantic server-rendered content, and simple navigation. Features like accounts, bookmarks, audio controls, and advanced reader settings can come later.
+          Dalail al-Khairat is a celebrated collection of salawat upon the Prophet ﷺ. The reading is commonly arranged into daily sections so it can be completed through the week.
         </p>
-        <h2>Current scope</h2>
+        <h2>How to use this site</h2>
         <p>
-          The MVP includes core reading pages, metadata, sitemap, robots, internal links, and search over extracted Arabic and English text.
+          Start with today’s reading, browse the weekly cycle, or search for a phrase in the Arabic text or English translation.
         </p>
         <Link className="button primary" href="/dalail-al-khairat">Browse readings</Link>
       </section>
