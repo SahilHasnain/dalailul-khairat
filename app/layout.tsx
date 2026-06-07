@@ -49,6 +49,9 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  verification: {
+    google: "CrG9FxpyYAY_iIQDEZUnftZaXdXCKR0wchO4wy6_E6A",
+  },
 };
 
 const navigation = [

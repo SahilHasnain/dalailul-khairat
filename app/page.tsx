@@ -1,11 +1,13 @@
 import Link from "next/link";
-import { getReading, getReadings, getTodayReading } from "@/lib/content";
+import { getReading, getReadings, getTodayReading, getTodayReadings } from "@/lib/content";
+import { SacredText } from "./components/sacred-text";
 
 export const dynamic = "force-dynamic";
 
 export default function Home() {
   const parts = getReadings().filter((reading) => reading.kind === "part");
   const today = getTodayReading();
+  const todaysReadings = getTodayReadings();
   const preview = getReading(today?.slug ?? "part-1")?.paragraphs[0];
 
   return (
@@ -47,14 +49,19 @@ export default function Home() {
         <aside className="home-preview" data-aos="fade-left" data-aos-delay="180" aria-label="Today’s reading preview">
           <span>Today’s reading</span>
           <h2>{today?.title ?? "Daily reading"}</h2>
-          {today?.day ? <p className="preview-day">{today.day} wird</p> : null}
+          <p className="preview-day">{todaysReadings.label}</p>
           <div className="home-preview-scroll">
+            <ul className="today-sequence" aria-label="Today’s reading sequence">
+              {todaysReadings.readings.map((reading) => (
+                <li key={reading.slug}>{reading.title}</li>
+              ))}
+            </ul>
             {preview?.arabic ? (
               <p className="preview-arabic" lang="ar" dir="rtl">
                 {preview.arabic}
               </p>
             ) : null}
-            {preview?.translation ? <p className="preview-translation">{preview.translation}</p> : null}
+            {preview?.translation ? <p className="preview-translation"><SacredText text={preview.translation} /></p> : null}
           </div>
           <Link href={today ? `/dalail-al-khairat/${today.slug}` : "/dalail-al-khairat"}>Open reading</Link>
         </aside>
@@ -68,7 +75,7 @@ export default function Home() {
         <article data-aos="fade-up" data-aos-delay="0">
           <span>01</span>
           <h2>Find today’s part quickly</h2>
-          <p>The weekly cycle is surfaced directly from the homepage and reader index.</p>
+          <p>The weekly cycle is surfaced directly, including the Monday completion and new beginning.</p>
         </article>
         <article data-aos="fade-up" data-aos-delay="120">
           <span>02</span>
@@ -95,7 +102,7 @@ export default function Home() {
                 {preview.arabic}
               </p>
             ) : null}
-            {preview?.translation ? <p className="translation">{preview.translation}</p> : null}
+            {preview?.translation ? <p className="translation"><SacredText text={preview.translation} /></p> : null}
           </div>
         </div>
       </section>
@@ -104,7 +111,7 @@ export default function Home() {
         <div data-aos="fade-right">
           <p className="eyebrow">Daily Wird</p>
           <h2 id="daily-reading">Browse by daily part</h2>
-          <p>Move through the weekly recitation cycle from Monday through Sunday.</p>
+          <p>Move through the weekly recitation cycle from Monday through Sunday, completing and beginning again on Monday.</p>
         </div>
         <div className="card-grid compact" data-aos="fade-left" data-aos-delay="120">
           {parts.map((part) => (

@@ -1,5 +1,6 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
+import { SacredText } from "../components/sacred-text";
 import { getAllReadingContent } from "@/lib/content";
 
 type Props = {
@@ -21,25 +22,6 @@ function getMatchText(query: string, values: Array<string | undefined>) {
   const value = values.find((item) => item?.toLocaleLowerCase().includes(normalizedQuery));
 
   return value ?? values.find(Boolean) ?? "";
-}
-
-function Highlight({ text, query }: { text: string; query: string }) {
-  if (!query) return text;
-
-  const index = text.toLocaleLowerCase().indexOf(query.toLocaleLowerCase());
-  if (index === -1) return text;
-
-  const before = text.slice(0, index);
-  const match = text.slice(index, index + query.length);
-  const after = text.slice(index + query.length);
-
-  return (
-    <>
-      {before}
-      <mark>{match}</mark>
-      {after}
-    </>
-  );
 }
 
 export default async function SearchPage({ searchParams }: Props) {
@@ -115,7 +97,7 @@ export default async function SearchPage({ searchParams }: Props) {
                   <span>{reading.day ? `${reading.day} · ${reading.title}` : reading.title}</span>
                   {paragraph.arabic ? <strong lang="ar" dir="rtl">{paragraph.arabic}</strong> : null}
                   <small>
-                    <Highlight text={matchText} query={query} />
+                    <SacredText text={matchText} query={query} />
                   </small>
                   <em>Open passage {paragraph.id.replace("p-", "")}</em>
                 </Link>

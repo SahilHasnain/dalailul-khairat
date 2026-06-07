@@ -31,6 +31,13 @@ export type ReadingGroup = {
   readings: ReadingMeta[];
 };
 
+export type DailyReading = {
+  day: string;
+  label: string;
+  description: string;
+  readings: ReadingMeta[];
+};
+
 const mirrorRoot = path.join(process.cwd(), "httrack", "dalailalkhayrat.com");
 
 const vercelUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL ?? process.env.VERCEL_URL;
@@ -148,9 +155,10 @@ export const readings: ReadingMeta[] = [
     slug: "part-8",
     title: "Part 8",
     label: "Part 8",
-    description: "Read Part 8 and the completion section of Dalail al-Khairat in Arabic with English translation.",
+    description: "Read Part 8 of Dalail al-Khairat for Monday before the completion dua.",
     kind: "part",
     sourceFile: "parts2f95.html",
+    day: "Monday",
     order: 12,
   },
   {
@@ -231,7 +239,7 @@ export function getReadingGroups(): ReadingGroup[] {
     },
     {
       title: "Daily Parts",
-      description: "The weekly recitation cycle from Monday through Sunday, plus Part 8.",
+      description: "The weekly recitation cycle begins on Monday and completes the following Monday.",
       readings: sortedReadings.filter((reading) => reading.kind === "part"),
     },
     {
@@ -243,10 +251,36 @@ export function getReadingGroups(): ReadingGroup[] {
 }
 
 export function getTodayReading(date = new Date()) {
-  const dayToSlug = ["part-7", "part-1", "part-2", "part-3", "part-4", "part-5", "part-6"];
+  const dayToSlug = ["part-7", "part-8", "part-2", "part-3", "part-4", "part-5", "part-6"];
   const slug = dayToSlug[date.getDay()];
 
   return readings.find((reading) => reading.slug === slug) ?? readings.find((reading) => reading.slug === "part-1");
+}
+
+export function getTodayReadings(date = new Date()): DailyReading {
+  const day = date.getDay();
+  const bySlug = (slug: string) => readings.find((reading) => reading.slug === slug);
+  const slugsByDay = [
+    ["intention-dua", "part-7"],
+    ["part-8", "completion-dua", "opening-dua", "names-of-allah", "names-of-the-prophet", "intention-dua", "part-1"],
+    ["intention-dua", "part-2"],
+    ["intention-dua", "part-3"],
+    ["intention-dua", "part-4"],
+    ["intention-dua", "part-5"],
+    ["intention-dua", "part-6"],
+  ];
+  const labels = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const readingList = slugsByDay[day].map(bySlug).filter((reading): reading is ReadingMeta => Boolean(reading));
+
+  return {
+    day: labels[day],
+    label: day === 1 ? "Monday completion and new beginning" : `${labels[day]} wird`,
+    description:
+      day === 1
+        ? "Complete the previous week with Part 8 and the completion dua, then begin again with the opening sections and Part 1."
+        : `Read the intention dua and ${readingList.at(-1)?.title ?? "today's part"}.`,
+    readings: readingList,
+  };
 }
 
 export function getReading(slug: string): Reading | undefined {

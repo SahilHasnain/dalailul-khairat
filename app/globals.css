@@ -347,6 +347,22 @@ input {
   font-size: 1rem;
 }
 
+.today-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.5rem;
+}
+
+.today-links a {
+  border: 1px solid rgba(185, 139, 59, 0.42);
+  border-radius: 999px;
+  padding: 0.35rem 0.65rem;
+  color: var(--green);
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
 .cycle-strip {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
@@ -608,6 +624,44 @@ input {
   line-height: 1.75;
 }
 
+.translation-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: -0.5rem;
+}
+
+.translation-panel {
+  margin-top: 1rem;
+}
+
+.translation-toggle {
+  border: 1px solid rgba(185, 139, 59, 0.45);
+  border-radius: 999px;
+  background: rgba(255, 250, 240, 0.88);
+  color: var(--green);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 850;
+  padding: 0.45rem 0.8rem;
+  transition: border-color 180ms ease, transform 180ms ease, background 180ms ease;
+}
+
+.translation-toggle:hover {
+  border-color: var(--gold);
+  background: var(--paper);
+  transform: translateY(-1px);
+}
+
+.sacred-suffix {
+  color: var(--green);
+  font-family: var(--font-arabic), serif;
+  font-size: 0.72em;
+  font-weight: 700;
+  line-height: 0;
+}
+
 .reader-pager {
   display: flex;
   justify-content: space-between;
@@ -756,8 +810,10 @@ input {
   }
 
   .search-form div,
-  .reader-pager {
+  .reader-pager,
+  .translation-toolbar {
     flex-direction: column;
+    align-items: stretch;
   }
 }
 

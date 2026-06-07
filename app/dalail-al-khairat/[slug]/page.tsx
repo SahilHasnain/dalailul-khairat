@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ReadingParagraphs } from "@/app/components/reading-paragraphs";
 import { getReading, getReadingGroups, getReadings, siteUrl } from "@/lib/content";
 
 type Props = {
@@ -110,21 +111,7 @@ export default async function ReadingPage({ params }: Props) {
             <p>The source HTML for this reading was not found in the HTTrack mirror.</p>
           </div>
         ) : (
-          <div className="paragraph-list">
-            {reading.paragraphs.map((paragraph) => (
-              <section className="reading-paragraph" data-aos="fade-up" id={paragraph.id} key={paragraph.id}>
-                <a className="paragraph-anchor" href={`#${paragraph.id}`} aria-label={`Link to passage ${paragraph.id.replace("p-", "")}`}>
-                  {paragraph.id.replace("p-", "")}
-                </a>
-                {paragraph.arabic ? (
-                  <p className="arabic" lang="ar" dir="rtl">
-                    {paragraph.arabic}
-                  </p>
-                ) : null}
-                {paragraph.translation ? <p className="translation">{paragraph.translation}</p> : null}
-              </section>
-            ))}
-          </div>
+          <ReadingParagraphs paragraphs={reading.paragraphs} />
         )}
 
         <nav className="reader-pager" data-aos="fade-up" aria-label="Previous and next reading">

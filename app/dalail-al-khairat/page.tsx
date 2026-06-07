@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getReadingGroups, getTodayReading } from "@/lib/content";
+import { getReadingGroups, getTodayReadings } from "@/lib/content";
 
 export const dynamic = "force-dynamic";
 
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function DalailIndexPage() {
   const groups = getReadingGroups();
-  const today = getTodayReading();
+  const today = getTodayReadings();
   const dailyParts = groups.find((group) => group.title === "Daily Parts")?.readings ?? [];
 
   return (
@@ -28,13 +28,18 @@ export default function DalailIndexPage() {
             Start with today’s part, browse the full weekly cycle, or open the preparatory duas and names sections.
           </p>
         </div>
-        {today ? (
-          <Link className="today-card" href={`/dalail-al-khairat/${today.slug}`}>
-            <span>Today’s reading</span>
-            <strong>{today.title}</strong>
-            <small>{today.day ? `${today.day} wird` : today.description}</small>
-          </Link>
-        ) : null}
+        <div className="today-card">
+          <span>Today’s reading</span>
+          <strong>{today.day}</strong>
+          <small>{today.description}</small>
+          <div className="today-links" aria-label="Today’s reading sequence">
+            {today.readings.map((reading) => (
+              <Link href={`/dalail-al-khairat/${reading.slug}`} key={reading.slug}>
+                {reading.title}
+              </Link>
+            ))}
+          </div>
+        </div>
       </section>
 
       <section className="cycle-strip" data-aos="fade-up" aria-label="Weekly daily reading cycle">
