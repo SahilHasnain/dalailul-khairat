@@ -16,7 +16,7 @@ const prophetReferenceRules: SacredRule[] = [
     clean: (value) => value.replace(prophetSalawatPattern, ""),
   },
   {
-    pattern: /\b(?:the\s+)?(?:Chosen\s+|Beloved\s+|Unlettered\s+|ascetic\s+)?(?:Prophet|Messenger|Nabi)(?:\s+of\s+(?:Allah|Mercy|the Lord of the Worlds))?\b(?:\s*ﷺ)?/iu,
+    pattern: /\b(?:the\s+)?(?:Chosen\s+|Beloved\s+|Unlettered\s+|Ummī\s+|ascetic\s+)?(?:Prophet|Messenger|Nabi)(?:\s+of\s+(?:Allah|Mercy|the Lord of the Worlds))?\b(?:\s*ﷺ)?/iu,
     suffix: "ﷺ",
     clean: (value) => value.replace(/\s*ﷺ\s*$/u, ""),
   },
